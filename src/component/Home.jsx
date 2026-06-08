@@ -1,4 +1,8 @@
   import "./Home.css";
+ import { Header } from "./Header";
+ import { Reviews } from "./Reviews";
+ import { Footer } from "./Footer";
+  
 
 export function Home() {
   const products = [
@@ -263,131 +267,12 @@ const sneakers = [
   },
 ];
 
-const reviews = [
-  { name: "Aarav", rating: "5.0", text: "The design is insane and the products look premium." },
-  { name: "Maya", rating: "4.8", text: "Super smooth shopping experience and clean layout." },
-  { name: "Rohan", rating: "5.0", text: "The smartwatch collection feels modern and stylish." },
-];
 
   return (
+    
+    
     <main className="home">
-      <div className="dragon-layer" aria-hidden="true">
-  <svg className="flying-dragon" viewBox="0 0 900 360">
-    <path
-      className="dragon-body"
-      d="M95 220 C180 95, 290 300, 390 165 C500 20, 620 285, 770 125"
-    />
-
-    <path
-      className="dragon-belly"
-      d="M118 220 C195 130, 285 278, 382 175 C500 50, 610 250, 748 140"
-    />
-
-    <path
-      className="dragon-tail"
-      d="M95 220 L28 184 L56 238 Z"
-    />
-
-    <path
-      className="dragon-head"
-      d="M748 96 L842 82 L872 118 L844 154 L766 145 L722 120 Z"
-    />
-
-    <path
-      className="dragon-mouth"
-      d="M830 126 L884 112 L842 142 Z"
-    />
-
-    <path
-      className="dragon-horn"
-      d="M774 89 L794 32 L812 92 Z"
-    />
-
-    <path
-      className="dragon-horn"
-      d="M815 86 L846 38 L850 102 Z"
-    />
-
-    <path
-      className="dragon-mane"
-      d="M170 130 L145 82 L210 112 L205 64 L260 118 L270 72 L315 135 L335 88 L370 150 L405 96 L420 170 L470 102 L470 188 L525 118 L512 205 L570 145 L548 230"
-    />
-
-    <circle className="dragon-eye" cx="825" cy="108" r="8" />
-    <circle className="dragon-eye-glow" cx="825" cy="108" r="18" />
-
-    <path className="dragon-whisker" d="M850 120 C910 98, 930 78, 970 52" />
-    <path className="dragon-whisker" d="M842 138 C902 150, 932 170, 972 210" />
-
-    <path className="dragon-claw" d="M355 190 L330 245 L365 225 L390 250" />
-    <path className="dragon-claw" d="M585 190 L555 252 L592 230 L620 258" />
-
-    <g className="dragon-scales">
-      <circle cx="205" cy="185" r="10" />
-      <circle cx="265" cy="205" r="10" />
-      <circle cx="330" cy="190" r="10" />
-      <circle cx="450" cy="145" r="10" />
-      <circle cx="520" cy="170" r="10" />
-      <circle cx="615" cy="190" r="10" />
-      <circle cx="700" cy="145" r="10" />
-    </g>
-  </svg>
-</div>
-      <nav className="navbar">
-        <h2>ShopVerse</h2>
-
-        <div className="nav-links">
-          <a href="/Home">Home</a>
-          <a href="/shop">Shop</a>
-          <a href="/cart">Cart</a>
-          <a href="/cart" className="cart-link">
-  <span className="cart-icon">🛒</span>
-  Cart
-</a>
-        </div>
-      </nav>
-
-      <section className="hero">
-        <div className="hero-text">
-          <span>New Drop Live</span>
-          <h1>Shop Your Favorite Products</h1>
-          
-         <p className="hero-subtitle lightning-line stylish-bolt">
-  Fashion, electronics, accessories, and more in one place.
-</p>
-          <button>Shop Now</button>
-        </div>
-
-        <div className="hero-display">
-          <div className="sale-badge">SALE</div>
-          <div className="deal-strip">UP TO 50% OFF</div>
-        </div>
-      </section>
-
-      <section className="products">
-        <div className="section-title">
-          <h2 className="featured-title">Featured Products</h2>
-          <p>Hot picks for this week</p>
-        </div>
-        <div className="product-grid">
-          {products.map((product) => (
-            <div className="card" key={product.name}>
-              <img src={product.image} alt={product.name} />
-              
-              
-
-              <div className="card-info">
-                <h3>{product.name}</h3>
-                <p>{product.price}</p>
-                <button>More</button>
-                
-                
-                
-              </div>
-            </div>
-          ))}
-        </div>
-      </section>
+      <Header />
             <section className="watch-section">
         <div className="section-title">
           <h2 className="lightning-title">Smart Watch Collection</h2>
@@ -445,64 +330,13 @@ const reviews = [
         <p className="model-price">{item.price}</p>
         <button>Add to Cart</button>
       </div>
-    ))}
-  </div>
-  <section className="reviews-section">
-  <div className="section-title">
-    <h2 className="lightning-title">Customer Reviews</h2>
-    <p>Real reactions from happy shoppers</p>
-  </div>
-
-  <div className="review-grid">
-    {reviews.map((review) => (
-      <div className="review-card" key={review.name}>
-        <div className="rating">{review.rating}</div>
-        <p>"{review.text}"</p>
-        <h3>{review.name}</h3>
-      </div>
+      
     ))}
   </div>
 </section>
-</section>
-<footer className="site-footer">
-  <div className="footer-brand">
-    <h2>ShopVerse</h2>
-    <p>Bold products, bright deals, and a shopping experience with serious energy.</p>
-  </div>
-
-  <div className="footer-links">
-    <div>
-      <h3>Shop</h3>
-      <a href="/shop">New Arrivals</a>
-      <a href="/shop">Smart Watches</a>
-      <a href="/shop">Headphones</a>
-      <a href="/shop">Sneakers</a>
-    </div>
-
-    <div>
-      <h3>Support</h3>
-      <a href="/contact">Contact</a>
-      <a href="/shipping">Shipping</a>
-      <a href="/returns">Returns</a>
-      <a href="/faq">FAQ</a>
-    </div>
-
-    <div>
-      <h3>Follow</h3>
-      <a href="https://instagram.com">Instagram</a>
-      <a href="https://youtube.com">YouTube</a>
-      <a href="https://x.com">X</a>
-      <a href="https://facebook.com">Facebook</a>
-    </div>
-  </div>
-
-  <div className="footer-bottom">
-    <p>© 2026 ShopVerse. All rights reserved.</p>
-    <span>Made for next-level shopping.</span>
-  </div>
-</footer>
+<Reviews />
+<Footer />
     </main>
-    
   );
 }
 

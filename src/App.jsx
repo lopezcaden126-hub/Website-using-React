@@ -1,20 +1,25 @@
 
-import { Navbar } from './component/Navbar'
-import { Aboutbar } from './component/Aboutbar'
+import { Footer } from './component/Footer'
+import { Header } from './component/Header'
 import { Home } from './component/Home'
+import { Reviews } from './component/Reviews';
 import {Routes,Route } from 'react-router-dom'
+ 
 function App() {
  
   
 
   return (
     <Routes>
-      <Route path="/Aboutbar" element={<Aboutbar />} />
+      <Route path="/" element={<Home/>} />
+       <Route path="/Header" element={<Header />} />
       <Route path="/Home" element={<Home/>} />
-      <Route path="/Navbar" element={<Navbar />} />
+      <Route path="/Footer" element={<Footer />} />
+      <Route path="/Reviews" element={<Reviews/>} />
+
     </Routes>
     
 );
 }
 
-export default App
+export default App;
