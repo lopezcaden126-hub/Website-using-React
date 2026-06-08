@@ -5,7 +5,7 @@ A modern  website built to showcase products with an attractive user interface a
 ## 🛠️ Technologies Used
 
 - React.js
-- JavaScript (
+- JavaScript 
 - HTML
 - CSS
 - Vite
