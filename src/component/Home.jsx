@@ -2,9 +2,43 @@
  import { Header } from "./Header";
  import { Reviews } from "./Reviews";
  import { Footer } from "./Footer";
-  
-
+import { Products } from "./Product";
+  import { Link } from 'react-router-dom'
+import { useState, useEffect } from "react";
+import { supabase } from "../Supabase";
 export function Home() {
+  const [dbProducts, setDbProducts] = useState([]);
+
+const fetchProducts = async () => {
+  const { data, error } = await supabase
+    .from("products")
+    .select("*");
+
+  if (error) {
+    console.log(error);
+  } else {
+    setDbProducts(data);
+  }
+};
+
+useEffect(() => {
+  const loadProducts = async () => {
+   await fetchProducts();
+  };
+   loadProducts();
+}, []);
+
+const watchProducts = dbProducts.filter(
+  (item) => item.Category === "watch"
+);
+
+const headphoneProducts = dbProducts.filter(
+  (item) => item.Category === "headphones"
+);
+
+const sneakerProducts = dbProducts.filter(
+  (item) => item.Category === "sneakers"
+);
   const products = [
     {
       name: "Smart Watch",
@@ -24,14 +58,14 @@ export function Home() {
   const smartWatches = [
   {
     name: "Volt X1",
-    price: "₹7,000",
+    price: "7,000",
     color: "#00f5d4",
     image:
       "data:image/jpeg;base64,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",
   },
   {
     name: "Nova Pro",
-    price: "₹5,000",
+    price: "5,000",
    
     color: "#ff006e",
     image:
@@ -39,7 +73,7 @@ export function Home() {
   },
   {
     name: "Pulse Max",
-    price: "₹8,550",
+    price: "8,550",
    
     color: "#ffbe0b",
     image:
@@ -47,7 +81,7 @@ export function Home() {
   },
   {
     name: "Titan S9",
-    price: "₹10,999",
+    price: "10,999",
    
     color: "#38bdf8",
     image:
@@ -55,7 +89,7 @@ export function Home() {
   },
   {
     name: "Orbit Mini",
-    price: "₹9,000",
+    price: "9,000",
    
     color: "#a3e635",
     image:
@@ -63,7 +97,7 @@ export function Home() {
   },
   {
     name: "Chrono Edge",
-    price: "₹6,050",
+    price: "6,050",
     
     color: "#f97316",
     image:
@@ -71,7 +105,7 @@ export function Home() {
   },
   {
     name: "Flex Fit",
-    price: "₹13,599",
+    price: "13,599",
    
     color: "#c084fc",
     image:
@@ -79,7 +113,7 @@ export function Home() {
   },
   {
     name: "Aura Luxe",
-    price: "₹1,15,000",
+    price: "1,15,000",
    
     color: "#facc15",
     image:
@@ -87,7 +121,7 @@ export function Home() {
   },
   {
     name: "Neo Band",
-    price: "₹3,000",
+    price: "3,000",
    
     color: "#2dd4bf",
     image:
@@ -95,7 +129,7 @@ export function Home() {
   },
   {
     name: "Storm Ultra",
-    price: "₹50,000",
+    price: "50,000",
     
     color: "#fb7185",
     image:
@@ -105,7 +139,7 @@ export function Home() {
 const headphones = [
   {
     name: "Bass Nova",
-    price: "₹4,000",
+    price: "4,000",
    
     color: "#00f5d4",
     image:
@@ -113,7 +147,7 @@ const headphones = [
   },
   {
     name: "Air Pulse",
-    price: "₹7,000",
+    price: "7,000",
     
     color: "#ff006e",
     image:
@@ -121,7 +155,7 @@ const headphones = [
   },
   {
     name: "Studio Max",
-    price: "₹6,000",
+    price: "6,000",
     
     color: "#ffbe0b",
     image:
@@ -129,7 +163,7 @@ const headphones = [
   },
   {
     name: "Wave Pro",
-    price: "₹8,000",
+    price: "8,000",
     
     color: "#38bdf8",
     image:
@@ -137,7 +171,7 @@ const headphones = [
   },
   {
     name: "Echo Lite",
-    price: "₹6,500",
+    price: "6,500",
    
     color: "#a3e635",
     image:
@@ -145,7 +179,7 @@ const headphones = [
   },
   {
     name: "Sonic Edge",
-    price: "₹7,999",
+    price: "7,999",
     
     color: "#f97316",
     image:
@@ -153,7 +187,7 @@ const headphones = [
   },
   {
     name: "Beat Flex",
-    price: "₹9,499",
+    price: "9,499",
    
     color: "#c084fc",
     image:
@@ -161,7 +195,7 @@ const headphones = [
   },
   {
     name: "Aura Sound",
-    price: "₹4,500",
+    price: "4,500",
     
     color: "#facc15",
     image:
@@ -169,7 +203,7 @@ const headphones = [
   },
   {
     name: "Neo Pods",
-    price: "₹5,999",
+    price: "5,999",
     
     color: "#2dd4bf",
     image:
@@ -177,7 +211,7 @@ const headphones = [
   },
   {
     name: "Storm Bass",
-    price: "₹9,999",
+    price: "9,999",
     
     color: "#fb7185",
     image:
@@ -188,7 +222,7 @@ const headphones = [
 const sneakers = [
   {
     name: "Neon Runner",
-    price: "₹9,000",
+    price: "9,000",
     
     color: "#00f5d4",
     image:
@@ -196,7 +230,7 @@ const sneakers = [
   },
   {
     name: "Flash Pro",
-    price: "₹5,000",
+    price: "5,000",
     
     color: "#ff006e",
     image:
@@ -204,7 +238,7 @@ const sneakers = [
   },
   {
     name: "Cloud Step",
-    price: "₹6,999",
+    price: "6,999",
     
     color: "#ffbe0b",
     image:
@@ -212,7 +246,7 @@ const sneakers = [
   },
   {
     name: "Urban Max",
-    price: "₹7,000",
+    price: "7,000",
    
     color: "#38bdf8",
     image:
@@ -220,7 +254,7 @@ const sneakers = [
   },
   {
     name: "Flex Lite",
-    price: "₹8,499",
+    price: "8,499",
     
     color: "#a3e635",
     image:
@@ -228,7 +262,7 @@ const sneakers = [
   },
   {
     name: "Street Edge",
-    price: "₹8,799",
+    price: "8,799",
     
     color: "#f97316",
     image:
@@ -236,7 +270,7 @@ const sneakers = [
   },
   {
     name: "Nova Kick",
-    price: "₹5,899",
+    price: "5,899",
     
     color: "#c084fc",
     image:
@@ -244,7 +278,7 @@ const sneakers = [
   },
   {
     name: "Aura Foam",
-    price: "₹7,900",
+    price: "7,900",
     
     color: "#facc15",
     image:
@@ -252,7 +286,7 @@ const sneakers = [
   },
   {
     name: "Neo Sprint",
-    price: "₹8,999",
+    price: "8,999",
     
     color: "#2dd4bf",
     image:
@@ -260,7 +294,7 @@ const sneakers = [
   },
   {
     name: "Storm Walk",
-    price: "₹7,899",
+    price: "7,899",
     color: "#fb7185",
     image:
       "https://images.unsplash.com/photo-1595950653106-6c9ebd614d3a?auto=format&fit=crop&w=800&q=80",
@@ -273,23 +307,38 @@ const sneakers = [
     
     <main className="home">
       <Header />
+      <Products products={products} />
             <section className="watch-section">
         <div className="section-title">
           <h2 className="lightning-title">Smart Watch Collection</h2>
           <p>10 different models built for every style</p>
+           <Link to="/Addproduct">
+  <button>Add Product</button>
+</Link>
         </div>
 
         <div className="watch-grid">
-          {smartWatches.map((watch) => (
+          {[...smartWatches, ...watchProducts].map((watch) => (
             <div
               className="watch-card"
               style={{ "--accent": watch.color }}
               key={watch.name}
             >
-              <img className="watch-image" src={watch.image} alt={watch.name} />
-              <h3>{watch.name}</h3>
-              <p className="watch-feature">{watch.feature}</p>
-              <p className="watch-price">{watch.price}</p>
+              <img
+  className="watch-image"
+  src={watch.image || watch.Image_url}
+  alt={watch.name || watch.Title}
+/>
+
+<h3>{watch.name || watch.Title}</h3>
+
+<p className="watch-feature">
+  {watch.feature || watch.Description}
+</p>
+
+<p className="watch-price">
+  ₹{watch.price || watch.Price}
+</p>
               <button>Add to Cart</button>
             </div>
           ))}
@@ -299,18 +348,38 @@ const sneakers = [
   <div className="section-title">
     <h2 className="lightning-title">Headphone Collection</h2>
     <p>10 audio models with powerful sound</p>
+     <Link to="/Addproduct">
+  <button>Add Product</button>
+</Link>
   </div>
 
   <div className="model-grid">
-    {headphones.map((item) => (
-      <div className="model-card" style={{ "--accent": item.color }} key={item.name}>
-        <img className="model-image" src={item.image} alt={item.name} />
-        <h3>{item.name}</h3>
-        <p className="model-feature">{item.feature}</p>
-        <p className="model-price">{item.price}</p>
-        <button>Add to Cart</button>
-      </div>
-    ))}
+    {[...headphones, ...headphoneProducts].map((item) => (
+  <div
+    className="model-card"
+    style={{ "--accent": item.color || "#00f5d4" }}
+    key={item.name || item.Title}
+  >
+    <img
+      className="model-image"
+      src={item.image || item.Image_url}
+      alt={item.name || item.Title}
+    />
+
+    <h3>{item.name || item.Title}</h3>
+
+    <p className="model-feature">
+      {item.feature || item.Description}
+    </p>
+
+    <p className="model-price">
+      ₹{item.price || item.Price}
+    </p>
+
+    <button>Add to Cart</button>
+  </div>
+))}
+    
   </div>
 </section>
 
@@ -318,24 +387,45 @@ const sneakers = [
   <div className="section-title">
     <h2 className="lightning-title">Sneaker Collection</h2>
     <p>10 fresh sneaker models for every outfit</p>
+     <Link to="/Addproduct">
+  <button>Add Product</button>
+</Link>
   </div>
+  
 
   <div className="model-grid">
-    {sneakers.map((item) => (
-      <div className="model-card" style={{ "--accent": item.color }} key={item.name}>
-        <img className="model-image" src={item.image} alt={item.name} />
+    {[...sneakers, ...sneakerProducts].map((item) => (
+  <div
+    className="model-card"
+    style={{ "--accent": item.color || "#00f5d4" }}
+    key={item.name || item.Title}
+  >
+    <img
+      className="model-image"
+      src={item.image || item.Image_url}
+      alt={item.name || item.Title}
+    />
 
-        <h3>{item.name}</h3>
-        <p className="model-feature">{item.feature}</p>
-        <p className="model-price">{item.price}</p>
-        <button>Add to Cart</button>
-      </div>
+    <h3>{item.name || item.Title}</h3>
+
+    <p className="model-feature">
+      {item.feature || item.Description}
+    </p>
+
+    <p className="model-price">
+      ₹{item.price || item.Price}
+    </p>
+
+    <button>Add to Cart</button>
+  </div>
+))}
       
-    ))}
+    
   </div>
 </section>
 <Reviews />
 <Footer />
+
     </main>
   );
 }

@@ -1,4 +1,5 @@
-export function Products() {
+
+export function Products({ products }) {
   return (
     <section className="products">
       { <section className="products">
@@ -7,6 +8,7 @@ export function Products() {
           <p>Hot picks for this week</p>
         </div>
         <div className="product-grid">
+          
           {products.map((product) => (
             <div className="card" key={product.name}>
               <img src={product.image} alt={product.name} />

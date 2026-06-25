@@ -1,4 +1,4 @@
-
+import  { Addproduct } from "./component/Addproduct";
 import { Footer } from './component/Footer'
 import { Header } from './component/Header'
 import { Home } from './component/Home'
@@ -16,7 +16,7 @@ function App() {
       <Route path="/Home" element={<Home/>} />
       <Route path="/Footer" element={<Footer />} />
       <Route path="/Reviews" element={<Reviews/>} />
-
+      <Route path="/Addproduct" element={<Addproduct/>} />
     </Routes>
     
 );
